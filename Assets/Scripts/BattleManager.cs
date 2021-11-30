@@ -66,8 +66,8 @@ public class BattleManager : MonoBehaviour
     // Battle Start - Displaying the initial prompt to the player
     void StartBattle()
     {
-        Debug.Log("<RivalName> wants to fight");
-        dialogueText.text = "<RivalName> wants to fight";
+        Debug.Log(GameManager.GameManagerInstance.rivalName + " wants to fight");
+        dialogueText.text = GameManager.GameManagerInstance.rivalName + " wants to fight";
         BattleState = 1;
     }
 
