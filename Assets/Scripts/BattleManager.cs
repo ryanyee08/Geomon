@@ -22,9 +22,12 @@ public class BattleManager : MonoBehaviour
     string playerName = GameManager.GameManagerInstance.playerName;
 
     // Management of Battle
+    [SerializeField]
     bool isPlayerTurn;
 
-    int TempPoints = 3;
+    // For experimenting with refining turn flow
+    public int yourGeomonHP = 4;
+    public int opponentGeomonHP = 3;
 
 
 
@@ -70,7 +73,15 @@ public class BattleManager : MonoBehaviour
         }
         else if (lastBattlePhase == BattlePhase.StartTurn)
         {
-            GetAttack();
+            // If its the opponents turn, opponent will randomly pick a move
+            if (isPlayerTurn == true)
+            {
+                GetAttack();
+            }
+            else
+            {
+                DeclareAttack();
+            }
         }
         else if (lastBattlePhase == BattlePhase.GetAttack)
         {
@@ -115,7 +126,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(opponentName + "goes first");
+            Debug.Log(opponentName + " goes first");
             firstTurnPlayerName = opponentName;
             isPlayerTurn = false;
 
@@ -138,11 +149,11 @@ public class BattleManager : MonoBehaviour
         if (isPlayerTurn == true)
         {
             currentTurnPlayer = playerName;
-            Debug.Log("It's <Player's> Turn");
+            Debug.Log("<Player's> Turn");
         } else
         {
             currentTurnPlayer = opponentName;
-            Debug.Log("It's <Opponenets Turn");
+            Debug.Log("<Opponent's> Turn");
         }
 
         dialogueManager.DisplayDialogue("It's " + currentTurnPlayer + "'s Turn");
@@ -164,10 +175,21 @@ public class BattleManager : MonoBehaviour
     }
     void DeclareDamage()
     {
-        TempPoints--;
-        Debug.Log("Opposing Geomon took 1 damage!");
-        dialogueManager.DisplayDialogue("Opposing Geomon took 1 damage!");
-        Debug.Log(TempPoints + " Hp Remaining");
+        if (isPlayerTurn == true)
+        {
+            opponentGeomonHP = opponentGeomonHP - 1;
+            dialogueManager.DisplayDialogue("Opposing Geomon took 1 damage!");
+            Debug.Log("Opposing Geomon took 1 damage!");
+            Debug.Log("opponent Geomon has " + opponentGeomonHP + " Hp Remaining");
+        } 
+        else
+        {
+            yourGeomonHP = yourGeomonHP - 1;
+            dialogueManager.DisplayDialogue("Your Geomon took 1 damage!");
+            Debug.Log("Your Geomon took 1 damage!");
+            Debug.Log(yourGeomonHP + " Hp Remaining");
+        }
+        
         lastBattlePhase = BattlePhase.DeclareDamage;
     }
 
@@ -181,7 +203,7 @@ public class BattleManager : MonoBehaviour
     {
         // If victory conditions are met then advance game to the end game flow
         Debug.Log("Checking if victory conditions were met");
-        if (TempPoints == 0)
+        if (opponentGeomonHP == 0)
         {
             EndBattle();
             lastBattlePhase = BattlePhase.EndBattle;
@@ -190,8 +212,24 @@ public class BattleManager : MonoBehaviour
         else
         {
             Debug.Log("Victory Conditions not met...continuing game");
-            dialogueManager.DisplayDialogue("Now its the other player's turn");
+            
+            // Turn goes to the other player
+            isPlayerTurn = !isPlayerTurn;
+            string upcomingTurnPlayerName;
+
+            if (isPlayerTurn == true)
+            {
+                Debug.Log(playerName + " goes next");
+                upcomingTurnPlayerName = playerName;
+            } else
+            {
+                Debug.Log(opponentName + " goes next");
+                upcomingTurnPlayerName = opponentName;
+            }
+
+            dialogueManager.DisplayDialogue("Now its " + upcomingTurnPlayerName + "'s turn");
             Debug.Log("Now its the other player's turn");
+
             lastBattlePhase = BattlePhase.StartTurn;
         }
     }
