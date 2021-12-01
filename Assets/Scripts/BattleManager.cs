@@ -2,16 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class BattleManager : MonoBehaviour
 {
-    int TempPoints = 3;
+    // UI Stuff
     [SerializeField]
-    int BattleState = 0;
-    
+    DialogueManager dialogueManager;
+
     public Button continueButton;
-    public TextMeshProUGUI dialogueText;
+
+    // Data from GameManager
+    // This is a bit overkill since there is only one fight in the battle
+    // However code will be cleaner if i can just reference the local variable
+    // Also if project were to be expanded there will be different opponents
+    // later on Gamemanager will store the name of npc that started the fight or wild geomon
+    [SerializeField]
+    string opponentName = GameManager.GameManagerInstance.rivalName;
+    [SerializeField]
+    string playerName = GameManager.GameManagerInstance.playerName;
+
+    // Management of Battle
+    bool isPlayerTurn;
+
+    int TempPoints = 3;
+
+
+
+    enum BattlePhase
+    {
+        StartBattle,
+        DecideTurnOrder,
+        SelectGeomon,
+        StartTurn,
+        GetPlayerAction, // Will not be used until switching is implemented
+        GetAttack,
+        DeclareAttack,
+        DeclareDamage,
+        Endturn,
+        EndBattle
+    }
+
+    [SerializeField]
+    BattlePhase lastBattlePhase;
 
     // Start is called before the first frame update
     void Start()
@@ -24,35 +56,35 @@ public class BattleManager : MonoBehaviour
 
     void AdvanceBattle()
     {
-        if (BattleState == 1)
+        if (lastBattlePhase == BattlePhase.StartBattle)
         {
             DecideTurnOrder();
         } 
-        else if (BattleState == 2)
+        else if (lastBattlePhase == BattlePhase.DecideTurnOrder)
         {
             SelectGeomon();
         }
-        else if (BattleState == 3)
+        else if (lastBattlePhase == BattlePhase.SelectGeomon)
         {
             StartTurn();
         }
-        else if (BattleState == 4)
+        else if (lastBattlePhase == BattlePhase.StartTurn)
         {
             GetAttack();
         }
-        else if (BattleState == 5)
+        else if (lastBattlePhase == BattlePhase.GetAttack)
         {
             DeclareAttack();
         }
-        else if (BattleState == 6)
+        else if (lastBattlePhase == BattlePhase.DeclareAttack)
         {
             DeclareDamage();
         }
-        else if (BattleState == 7)
+        else if (lastBattlePhase == BattlePhase.DeclareDamage)
         {
             EndTurn();
         }
-        else if (BattleState == 8)
+        else if (lastBattlePhase == BattlePhase.EndBattle)
         {
             Debug.Log("Battle is Over");
         }
@@ -66,78 +98,108 @@ public class BattleManager : MonoBehaviour
     // Battle Start - Displaying the initial prompt to the player
     void StartBattle()
     {
-        Debug.Log(GameManager.GameManagerInstance.rivalName + " wants to fight");
-        dialogueText.text = GameManager.GameManagerInstance.rivalName + " wants to fight";
-        BattleState = 1;
+        Debug.Log(opponentName + " wants to fight");
+        dialogueManager.DisplayDialogue(opponentName + " wants to fight");
+        lastBattlePhase = BattlePhase.StartBattle;
     }
 
     void DecideTurnOrder()
     {
+        string firstTurnPlayerName;
         var n = Random.Range(0, 2);
-        Debug.Log(n + " goes first");
-        dialogueText.text = n + " goes first";
-        BattleState = 2;
+        if (n == 0)
+        {
+            Debug.Log(playerName + " goes first");
+            firstTurnPlayerName = playerName;
+            isPlayerTurn = true;
+        }
+        else
+        {
+            Debug.Log(opponentName + "goes first");
+            firstTurnPlayerName = opponentName;
+            isPlayerTurn = false;
+
+        }
+
+        dialogueManager.DisplayDialogue(firstTurnPlayerName + " goes first");
+        lastBattlePhase = BattlePhase.DecideTurnOrder;
     }
 
     void SelectGeomon ()
     {
         Debug.Log("Choose your Geomon");
-        dialogueText.text = "Choose your Geomon";
-        BattleState = 3;
+        dialogueManager.DisplayDialogue("Choose your Geomon");
+        lastBattlePhase = BattlePhase.SelectGeomon;
     }
 
     void StartTurn ()
     {
-        Debug.Log("It's <Player's> Turn");
-        dialogueText.text = "It's <Player's> Turn";
-        BattleState = 4;
+        string currentTurnPlayer;
+        if (isPlayerTurn == true)
+        {
+            currentTurnPlayer = playerName;
+            Debug.Log("It's <Player's> Turn");
+        } else
+        {
+            currentTurnPlayer = opponentName;
+            Debug.Log("It's <Opponenets Turn");
+        }
+
+        dialogueManager.DisplayDialogue("It's " + currentTurnPlayer + "'s Turn");
+        lastBattlePhase = BattlePhase.StartTurn;
     }
 
     void GetAttack()
     {
         Debug.Log("What attack will Geomon use?");
-        dialogueText.text = "What attack will Geomon use?";
-        BattleState = 5;
+        dialogueManager.DisplayDialogue("What attack will Geomon use?");
+        lastBattlePhase = BattlePhase.GetAttack;
     }
 
     void DeclareAttack()
     {
         Debug.Log("Geomon used trignometry");
-        dialogueText.text = "Geomon used trignometry";
-        BattleState = 6;
+        dialogueManager.DisplayDialogue("Geomon used trignometry");
+        lastBattlePhase = BattlePhase.DeclareAttack;
     }
     void DeclareDamage()
     {
         TempPoints--;
         Debug.Log("Opposing Geomon took 1 damage!");
-        dialogueText.text = "Opposing Geomon took 1 damage!";
+        dialogueManager.DisplayDialogue("Opposing Geomon took 1 damage!");
         Debug.Log(TempPoints + " Hp Remaining");
-        CheckVictory();
+        lastBattlePhase = BattlePhase.DeclareDamage;
     }
 
     void EndTurn()
     {
-        dialogueText.text = "Now its the other player's turn";
-        Debug.Log("Now its the other player's turn");
-        BattleState = 3;
+        CheckVictory();
     }
 
     // Checks to see if the player has won by eliminating the opponents Geomon
     void CheckVictory()
     {
+        // If victory conditions are met then advance game to the end game flow
+        Debug.Log("Checking if victory conditions were met");
         if (TempPoints == 0)
         {
             EndBattle();
-            BattleState = 8;
-        } else
+            lastBattlePhase = BattlePhase.EndBattle;
+        } 
+        // Otherwise start a new turn
+        else
         {
-            BattleState = 7;
+            Debug.Log("Victory Conditions not met...continuing game");
+            dialogueManager.DisplayDialogue("Now its the other player's turn");
+            Debug.Log("Now its the other player's turn");
+            lastBattlePhase = BattlePhase.StartTurn;
         }
     }
 
     void EndBattle()
     {
-        dialogueText.text = "You have won the battle!";
+        dialogueManager.DisplayDialogue("You have won the battle!");
         Debug.Log("You have won the battle!");
     }
+
 }

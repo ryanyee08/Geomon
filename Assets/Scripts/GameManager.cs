@@ -6,9 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager GameManagerInstance;
 
-    [SerializeField]
     public string playerName;
-    [SerializeField]
     public string rivalName;
 
     private void Awake()
