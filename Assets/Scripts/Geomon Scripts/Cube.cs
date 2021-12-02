@@ -2,12 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Geomon : MonoBehaviour
+public class Cube : MonoBehaviour
 {
-    string geomonName;
-    int currentHP;
-    int maximumHP;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -19,4 +15,11 @@ public class Geomon : MonoBehaviour
     {
         
     }
+
+    void TackleAttack()
+    {
+        // Does the animation thing on the cube
+        // Deals 2 damage to the opponent
+    }
+
 }

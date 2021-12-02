@@ -35,7 +35,7 @@ public class BattleManager : MonoBehaviour
     {
         StartBattle,
         DecideTurnOrder,
-        SelectGeomon,
+        SelectGeomon, // Will not be used until having more than one geomon is supported
         StartTurn,
         GetPlayerAction, // Will not be used until switching is implemented
         GetAttack,
