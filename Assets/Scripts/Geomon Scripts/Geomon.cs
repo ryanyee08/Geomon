@@ -2,13 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Geomon : MonoBehaviour
+public class Geomon
 {
     public string geomonName;
+    public int level;
     public int currentHP;
     public int maximumHP;
-    public int level;
-    public bool hasFainted = false;
+    public bool hasFainted;
+
+    public Geomon (string mgeomonName, int mmaximumHP) {
+        geomonName = mgeomonName;
+        level = 5;
+        currentHP = mmaximumHP;
+        maximumHP = mmaximumHP;
+        hasFainted = false;
+    }
 
     public void TakeDamage(int damageAmount)
     {

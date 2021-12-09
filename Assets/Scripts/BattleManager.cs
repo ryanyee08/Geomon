@@ -3,40 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// BattleManager is responsible for the flow of the battle and determining victory conditions
+// It will take in input by the player and output the results of the player's decision through dialogueManager
+// It will eventually read the data from YourGeomon and OpponentGeomon objects
 public class BattleManager : MonoBehaviour
 {
     // UI Stuff
     [SerializeField]
     DialogueManager dialogueManager;
+    [SerializeField]
+    BattleUIManager battleUIManager;
 
     public Button continueButton;
 
     // Data from GameManager
-    // This is a bit overkill since there is only one fight in the battle
-    // However code will be cleaner if i can just reference the local variable
+    // This is a bit overkill since there is only one fight in the demo
+    // However code will be cleaner if i can just reference
+    // the local variable
     // Also if project were to be expanded there will be different opponents
     // later on Gamemanager will store the name of npc that started the fight or wild geomon
     [SerializeField]
-    string opponentName = GameManager.GameManagerInstance.rivalName;
+    string opponentName = "Blue";
     [SerializeField]
-    string playerName = GameManager.GameManagerInstance.playerName;
+    string playerName = "Red";
 
     // Management of Battle
     [SerializeField]
     bool isPlayerTurn;
 
-    // For experimenting with refining turn flow
-    public int yourGeomonHP = 4;
-    public int opponentGeomonHP = 3;
+    // For experimenting with Geomon Objects
 
-
+    public Geomon yourGeomon = new Geomon("Cubis", 4);
+    public Geomon opponentGeomon = new Geomon("Sphero", 3);
 
     enum BattlePhase
     {
         StartBattle,
         DecideTurnOrder,
-        SelectGeomon, // Will not be used until having more than one geomon is supported
+        SelectGeomon, // Will not be used until switching is implemented
         StartTurn,
+        //Upkeep, //This would be used to handle things that need to resolve at start of turn
         GetPlayerAction, // Will not be used until switching is implemented
         GetAttack,
         DeclareAttack,
@@ -51,8 +57,17 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Link up advance battle button
         Button btn = continueButton.GetComponent<Button>();
         btn.onClick.AddListener(AdvanceBattle);
+
+        // Update the battle Displays
+        battleUIManager.UpdateYourGeomonNameDisplay(yourGeomon.geomonName);
+        battleUIManager.UpdateOpponentGeomonNameDisplay(opponentGeomon.geomonName);
+        battleUIManager.UpdateYourGeomonLevelDisplay(yourGeomon.level);
+        battleUIManager.UpdateOpponentGeomonLevelDisplay(opponentGeomon.level);
+        battleUIManager.UpdateYourGeomonHpDisplay(yourGeomon.currentHP, yourGeomon.maximumHP);
+        battleUIManager.UpdateOpponentGeomonHPDisplay(opponentGeomon.currentHP, opponentGeomon.maximumHP);
 
         StartBattle();
     }
@@ -63,11 +78,12 @@ public class BattleManager : MonoBehaviour
         {
             DecideTurnOrder();
         } 
+        //else if (lastBattlePhase == BattlePhase.DecideTurnOrder)
+        //{
+        //    SelectGeomon();
+        //}
+        // THe ine below would would be selectGeomon but its being skipped for now
         else if (lastBattlePhase == BattlePhase.DecideTurnOrder)
-        {
-            SelectGeomon();
-        }
-        else if (lastBattlePhase == BattlePhase.SelectGeomon)
         {
             StartTurn();
         }
@@ -175,21 +191,27 @@ public class BattleManager : MonoBehaviour
     }
     void DeclareDamage()
     {
+        // Debug stuff
+        checkAllGeomon();
+
         if (isPlayerTurn == true)
         {
-            opponentGeomonHP = opponentGeomonHP - 1;
+            opponentGeomon.TakeDamage(1);
+            battleUIManager.UpdateOpponentGeomonHPDisplay(opponentGeomon.currentHP, opponentGeomon.maximumHP);
             dialogueManager.DisplayDialogue("Opposing Geomon took 1 damage!");
             Debug.Log("Opposing Geomon took 1 damage!");
-            Debug.Log("opponent Geomon has " + opponentGeomonHP + " Hp Remaining");
         } 
         else
         {
-            yourGeomonHP = yourGeomonHP - 1;
+            yourGeomon.TakeDamage(1);
+            battleUIManager.UpdateYourGeomonHpDisplay(yourGeomon.currentHP, yourGeomon.maximumHP);
             dialogueManager.DisplayDialogue("Your Geomon took 1 damage!");
             Debug.Log("Your Geomon took 1 damage!");
-            Debug.Log(yourGeomonHP + " Hp Remaining");
         }
-        
+
+        // Debug stuff
+        checkAllGeomon();
+
         lastBattlePhase = BattlePhase.DeclareDamage;
     }
 
@@ -203,7 +225,7 @@ public class BattleManager : MonoBehaviour
     {
         // If victory conditions are met then advance game to the end game flow
         Debug.Log("Checking if victory conditions were met");
-        if (opponentGeomonHP == 0)
+        if (opponentGeomon.currentHP == 0)
         {
             EndBattle();
             lastBattlePhase = BattlePhase.EndBattle;
@@ -238,6 +260,16 @@ public class BattleManager : MonoBehaviour
     {
         dialogueManager.DisplayDialogue("You have won the battle!");
         Debug.Log("You have won the battle!");
+    }
+
+    // This function is for debugging only
+    // Displays current stats for Your/Opponent Geomon
+
+    void checkAllGeomon()
+    {
+        // Displays your Geomon Data
+        Debug.Log("Your Geomon Name: " + yourGeomon.geomonName + "   Current HP: " + yourGeomon.currentHP +  "   Max HP: " + yourGeomon.maximumHP + "   hasFainted: " + yourGeomon.hasFainted);
+        Debug.Log("Opponent Geomon Name: " + opponentGeomon.geomonName + "   Current HP: " + opponentGeomon.currentHP + "   Max HP: " + opponentGeomon.maximumHP + "   hasFainted: " + opponentGeomon.hasFainted);
     }
 
 }
