@@ -34,8 +34,13 @@ public class BattleManager : MonoBehaviour
 
     // For experimenting with Geomon Objects
 
-    Geomon yourGeomon = new Geomon("Cubis", 4, "Tackle", "CubeBlast");
-    Geomon opponentGeomon = new Geomon("Sphero", 3, "Tackle", "SphereBlast");
+    Geomon yourGeomon = new Geomon("Cubis", 8, "Tackle", "CubeBlast");
+    Geomon opponentGeomon = new Geomon("Sphero", 6, "Tackle", "SphereBlast");
+
+    [SerializeField]
+    string yourActiveGeomonName;
+    [SerializeField]
+    string opponentActiveGeomonName;
 
     enum BattlePhase
     {
@@ -55,17 +60,32 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     BattlePhase lastBattlePhase;
 
+    // In a future refactor I'm pretty sure I can just use one variable to track since there is only ever one attack per turn
+    [SerializeField]
+    string selectedPlayerAttackName;
+
+    [SerializeField]
+    string selectedOpponentAttackName;
+
     // Start is called before the first frame update
     void Start()
     {
+        // This is temporary and should be refactored into Geomon Manager
+        yourActiveGeomonName = yourGeomon.geomonName;
+        opponentActiveGeomonName = opponentGeomon.geomonName;
+
         // Link up advance battle button
         Button btn = continueButton.GetComponent<Button>();
         btn.onClick.AddListener(AdvanceBattle);
 
-        // TODO Link up the attack buttons
-            // Code does here
-            // more code
-            // such code
+        // Link up attack 1 button
+        Button attk1btn = attackButton1.GetComponent<Button>();
+        attk1btn.onClick.AddListener(() => SelectAttack(1));
+
+        // Link up attack 2 button
+        Button attk2btn = attackButton2.GetComponent<Button>();
+        attk2btn.onClick.AddListener(() => SelectAttack(2));
+
 
         // Update the battle Displays
         battleUIManager.UpdateYourGeomonNameDisplay(yourGeomon.geomonName);
@@ -75,11 +95,15 @@ public class BattleManager : MonoBehaviour
         battleUIManager.UpdateYourGeomonHpDisplay(yourGeomon.currentHP, yourGeomon.maximumHP);
         battleUIManager.UpdateOpponentGeomonHPDisplay(opponentGeomon.currentHP, opponentGeomon.maximumHP);
 
+        // Update the Attack buttons
+        dialogueManager.UpdateAttackButtonText(yourGeomon.Attack1, yourGeomon.Attack2);
+
         StartBattle();
     }
 
     void AdvanceBattle()
     {
+        // In the future I would rewrite this as a switch
         if (lastBattlePhase == BattlePhase.StartBattle)
         {
             DecideTurnOrder();
@@ -128,8 +152,11 @@ public class BattleManager : MonoBehaviour
     // Battle Start - Displaying the initial prompt to the player
     void StartBattle()
     {
-        Debug.Log(opponentName + " wants to fight");
-        dialogueManager.DisplayDialogue(opponentName + " wants to fight");
+        string StartbattleText = opponentName + " wants to fight!";
+
+        dialogueManager.DisplayDialogue(StartbattleText);
+        Debug.Log(StartbattleText);
+
         lastBattlePhase = BattlePhase.StartBattle;
     }
 
@@ -139,26 +166,26 @@ public class BattleManager : MonoBehaviour
         var n = Random.Range(0, 2);
         if (n == 0)
         {
-            Debug.Log(playerName + " goes first");
             firstTurnPlayerName = playerName;
             isPlayerTurn = true;
+            Debug.Log(playerName + " get's to go first");
         }
         else
         {
-            Debug.Log(opponentName + " goes first");
             firstTurnPlayerName = opponentName;
             isPlayerTurn = false;
+            Debug.Log(opponentName + " gets to go first");
 
         }
 
-        dialogueManager.DisplayDialogue(firstTurnPlayerName + " goes first");
+        dialogueManager.DisplayDialogue(firstTurnPlayerName + " gets to go first.");
         lastBattlePhase = BattlePhase.DecideTurnOrder;
     }
 
     void SelectGeomon ()
     {
-        Debug.Log("Choose your Geomon");
-        dialogueManager.DisplayDialogue("Choose your Geomon");
+        Debug.Log("Choose your Geomon.");
+        dialogueManager.DisplayDialogue("Choose your Geomon.");
         lastBattlePhase = BattlePhase.SelectGeomon;
     }
 
@@ -175,23 +202,42 @@ public class BattleManager : MonoBehaviour
             Debug.Log("<Opponent's> Turn");
         }
 
-        dialogueManager.DisplayDialogue("It's " + currentTurnPlayer + "'s Turn");
+        dialogueManager.DisplayDialogue("It's " + currentTurnPlayer + "'s Turn.");
         lastBattlePhase = BattlePhase.StartTurn;
     }
 
     // Displays the attack buttons to take in user selection of attacks
     void GetAttack()
     {
-        Debug.Log("What attack will Geomon use?");
-        dialogueManager.DisplayDialogue("What attack will Geomon use?");
-
+        Debug.Log("What attack will " + yourActiveGeomonName + " use?");
+        dialogueManager.DisplayDialogue("What attack will " + yourActiveGeomonName + " use?");
+        dialogueManager.HideAdvanceTurnButton();
+        dialogueManager.DisplayAttackButtons();
     }
 
     // Announces what attack the player has selected TODO plays the animation for the attack
     void DeclareAttack()
     {
-        Debug.Log("Geomon used trignometry");
-        dialogueManager.DisplayDialogue("Geomon used trignometry");
+        if (isPlayerTurn == true)
+        {
+            // Lookup the name of the attack selected
+            string attackname = attackDatabase.GetAttackName(selectedPlayerAttackName);
+
+            // Display the attack to the player
+            Debug.Log(yourActiveGeomonName + " used " + attackname);
+            dialogueManager.DisplayDialogue(yourActiveGeomonName + " used " + attackname + "!");
+        }
+        else
+        {
+            // Select an attack for the opponent to use
+            selectedOpponentAttackName = OpponentAttackSelection();
+            string attackname = attackDatabase.GetAttackName(selectedOpponentAttackName);
+
+            // Display the opponent's attack to the player
+            Debug.Log(opponentName + "'s " + opponentActiveGeomonName + " used " + attackname);
+            dialogueManager.DisplayDialogue(opponentName + "'s " + opponentActiveGeomonName + " used " + attackname + "!");
+        }
+        
         lastBattlePhase = BattlePhase.DeclareAttack;
     }
 
@@ -202,17 +248,25 @@ public class BattleManager : MonoBehaviour
 
         if (isPlayerTurn == true)
         {
-            opponentGeomon.TakeDamage(1);
+            // Lookup how much damange to do and then apply it to Opponent Geomon
+            int attackDamage = attackDatabase.GetAttackDamage(selectedPlayerAttackName);
+            opponentGeomon.TakeDamage(attackDamage);
+
+            // Update Battle UI to reflect new HP and display message to player
             battleUIManager.UpdateOpponentGeomonHPDisplay(opponentGeomon.currentHP, opponentGeomon.maximumHP);
-            dialogueManager.DisplayDialogue("Opposing Geomon took 1 damage!");
-            Debug.Log("Opposing Geomon took 1 damage!");
+            dialogueManager.DisplayDialogue(opponentName + "'s " + opponentActiveGeomonName + " took " + attackDamage + " damage!");
+            Debug.Log(opponentName + "'s " + opponentActiveGeomonName + " took " + attackDamage + " damage!");
         } 
         else
         {
-            yourGeomon.TakeDamage(1);
+            // Lookup how much damage your opponents attack will do to your Geomon and then apply it
+            int attackDamage = attackDatabase.GetAttackDamage(selectedOpponentAttackName);
+            yourGeomon.TakeDamage(attackDamage);
+
+            // Update Battle UI to reflect new HP and display message to player
             battleUIManager.UpdateYourGeomonHpDisplay(yourGeomon.currentHP, yourGeomon.maximumHP);
-            dialogueManager.DisplayDialogue("Your Geomon took 1 damage!");
-            Debug.Log("Your Geomon took 1 damage!");
+            dialogueManager.DisplayDialogue("Your " + yourActiveGeomonName + " took " + attackDamage + " damage!");
+            Debug.Log("Your " + yourActiveGeomonName + " took " + attackDamage + " damage!");
         }
 
         // Debug stuff
@@ -231,12 +285,49 @@ public class BattleManager : MonoBehaviour
     // *** Start of Battle Helper Functions *** //
 
     // Executes the effects of an attack
-    void SelectAttack()
+    public void SelectAttack(int attackNumber)
     {
+        // Take in the value selected by player
+        Debug.Log("Player Selected Attack Number: " + attackNumber);
+
+        // Lookup the name of the attack
+        switch (attackNumber)
+        {
+            case 1:
+                selectedPlayerAttackName = yourGeomon.Attack1;
+                break;
+            case 2:
+                selectedPlayerAttackName = yourGeomon.Attack2;
+                break;
+        }
+
+        Debug.Log("Selection corresponds to: " + selectedPlayerAttackName);
 
         // Advance to the next state
         lastBattlePhase = BattlePhase.GetAttack;
+        AdvanceBattle();
         // Hide the attack buttons and redisplay the advance button
+        dialogueManager.HideAttackButtons();
+        dialogueManager.DisplayAdvanceTurnButton();
+    }
+
+    public string OpponentAttackSelection()
+    {
+        string attackname = "String";
+       
+        // Randomly pick a number between 1 and the total number of attacks which atm is hard limited at 2
+        var n = Random.Range(1, 3);
+
+        switch (n)
+        {
+            case 1:
+                attackname = opponentGeomon.Attack1;
+                break;
+            case 2:
+                attackname = opponentGeomon.Attack2;
+                break;
+        }
+        return attackname;
     }
 
     // Checks to see if the player has won by eliminating the opponents Geomon
@@ -268,7 +359,7 @@ public class BattleManager : MonoBehaviour
                 upcomingTurnPlayerName = opponentName;
             }
 
-            dialogueManager.DisplayDialogue("Now its " + upcomingTurnPlayerName + "'s turn");
+            dialogueManager.DisplayDialogue("Now its " + upcomingTurnPlayerName + "'s turn!");
             Debug.Log("Now its the other player's turn");
 
             lastBattlePhase = BattlePhase.StartTurn;
@@ -292,5 +383,4 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Your Geomon Name: " + yourGeomon.geomonName + "   Current HP: " + yourGeomon.currentHP +  "   Max HP: " + yourGeomon.maximumHP + "   hasFainted: " + yourGeomon.hasFainted);
         Debug.Log("Opponent Geomon Name: " + opponentGeomon.geomonName + "   Current HP: " + opponentGeomon.currentHP + "   Max HP: " + opponentGeomon.maximumHP + "   hasFainted: " + opponentGeomon.hasFainted);
     }
-
 }

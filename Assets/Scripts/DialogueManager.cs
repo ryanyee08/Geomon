@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class DialogueManager : MonoBehaviour
@@ -13,6 +14,12 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField]
     GameObject attackButtonGroup;
+
+    [SerializeField]
+    TextMeshProUGUI AttackButton1;
+
+    [SerializeField]
+    TextMeshProUGUI AttackButton2;
 
     public void DisplayDialogue(string text)
     {
@@ -37,5 +44,11 @@ public class DialogueManager : MonoBehaviour
     public void HideAttackButtons()
     {
         attackButtonGroup.SetActive(false);
+    }
+
+    public void UpdateAttackButtonText(string Attack1, string Attack2)
+    {
+        AttackButton1.text = Attack1;
+        AttackButton2.text = Attack2;
     }
 }
