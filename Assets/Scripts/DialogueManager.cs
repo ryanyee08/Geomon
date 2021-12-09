@@ -8,20 +8,34 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI dialogueText;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    GameObject advanceButton;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    GameObject attackButtonGroup;
 
     public void DisplayDialogue(string text)
     {
         dialogueText.text = text;
+    }
+
+    public void DisplayAdvanceTurnButton()
+    {
+        advanceButton.SetActive(true);
+    }
+
+    public void HideAdvanceTurnButton()
+    {
+        advanceButton.SetActive(false);
+    }
+
+    public void DisplayAttackButtons()
+    {
+        attackButtonGroup.SetActive(true);
+    }
+
+    public void HideAttackButtons()
+    {
+        attackButtonGroup.SetActive(false);
     }
 }

@@ -8,6 +8,10 @@ using UnityEngine.UI;
 // It will eventually read the data from YourGeomon and OpponentGeomon objects
 public class BattleManager : MonoBehaviour
 {
+    // Other Objects that need to be referenced
+    [SerializeField]
+    AttackDatabase attackDatabase;
+    
     // UI Stuff
     [SerializeField]
     DialogueManager dialogueManager;
@@ -15,13 +19,10 @@ public class BattleManager : MonoBehaviour
     BattleUIManager battleUIManager;
 
     public Button continueButton;
+    public Button attackButton1;
+    public Button attackButton2;
 
-    // Data from GameManager
-    // This is a bit overkill since there is only one fight in the demo
-    // However code will be cleaner if i can just reference
-    // the local variable
-    // Also if project were to be expanded there will be different opponents
-    // later on Gamemanager will store the name of npc that started the fight or wild geomon
+    // Data from GameManager (todo)
     [SerializeField]
     string opponentName = "Blue";
     [SerializeField]
@@ -33,8 +34,8 @@ public class BattleManager : MonoBehaviour
 
     // For experimenting with Geomon Objects
 
-    public Geomon yourGeomon = new Geomon("Cubis", 4);
-    public Geomon opponentGeomon = new Geomon("Sphero", 3);
+    Geomon yourGeomon = new Geomon("Cubis", 4, "Tackle", "CubeBlast");
+    Geomon opponentGeomon = new Geomon("Sphero", 3, "Tackle", "SphereBlast");
 
     enum BattlePhase
     {
@@ -60,6 +61,11 @@ public class BattleManager : MonoBehaviour
         // Link up advance battle button
         Button btn = continueButton.GetComponent<Button>();
         btn.onClick.AddListener(AdvanceBattle);
+
+        // TODO Link up the attack buttons
+            // Code does here
+            // more code
+            // such code
 
         // Update the battle Displays
         battleUIManager.UpdateYourGeomonNameDisplay(yourGeomon.geomonName);
@@ -116,11 +122,8 @@ public class BattleManager : MonoBehaviour
             Debug.Log("Battle is Over");
         }
     }
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
+    // *** Start of Main Battle Phase Functions *** //
 
     // Battle Start - Displaying the initial prompt to the player
     void StartBattle()
@@ -176,19 +179,22 @@ public class BattleManager : MonoBehaviour
         lastBattlePhase = BattlePhase.StartTurn;
     }
 
+    // Displays the attack buttons to take in user selection of attacks
     void GetAttack()
     {
         Debug.Log("What attack will Geomon use?");
         dialogueManager.DisplayDialogue("What attack will Geomon use?");
-        lastBattlePhase = BattlePhase.GetAttack;
+
     }
 
+    // Announces what attack the player has selected TODO plays the animation for the attack
     void DeclareAttack()
     {
         Debug.Log("Geomon used trignometry");
         dialogueManager.DisplayDialogue("Geomon used trignometry");
         lastBattlePhase = BattlePhase.DeclareAttack;
     }
+
     void DeclareDamage()
     {
         // Debug stuff
@@ -218,6 +224,19 @@ public class BattleManager : MonoBehaviour
     void EndTurn()
     {
         CheckVictory();
+    }
+
+    // *** End of Main Battle Phase Functions *** //
+
+    // *** Start of Battle Helper Functions *** //
+
+    // Executes the effects of an attack
+    void SelectAttack()
+    {
+
+        // Advance to the next state
+        lastBattlePhase = BattlePhase.GetAttack;
+        // Hide the attack buttons and redisplay the advance button
     }
 
     // Checks to see if the player has won by eliminating the opponents Geomon
@@ -262,9 +281,11 @@ public class BattleManager : MonoBehaviour
         Debug.Log("You have won the battle!");
     }
 
-    // This function is for debugging only
-    // Displays current stats for Your/Opponent Geomon
+    // *** End of Battle Helper Functions *** //
 
+    // ** Everything below this line is for debug functions
+
+    // Displays current stats for Your/Opponent Geomon
     void checkAllGeomon()
     {
         // Displays your Geomon Data

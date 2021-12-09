@@ -9,13 +9,17 @@ public class Geomon
     public int currentHP;
     public int maximumHP;
     public bool hasFainted;
+    public string Attack1;
+    public string Attack2;
 
-    public Geomon (string mgeomonName, int mmaximumHP) {
+    public Geomon (string mgeomonName, int mmaximumHP, string mAttack1, string mAttack2) {
         geomonName = mgeomonName;
         level = 5;
         currentHP = mmaximumHP;
         maximumHP = mmaximumHP;
         hasFainted = false;
+        Attack1 = mAttack1;
+        Attack2 = mAttack2;
     }
 
     public void TakeDamage(int damageAmount)
