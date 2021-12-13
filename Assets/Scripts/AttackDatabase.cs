@@ -7,11 +7,13 @@ public class Attack
 {
     public string attackName;
     public int attackDamage;
+    public string attackSound;
 
-    public Attack(string mattackName, int mattackDamage)
+    public Attack(string mattackName, int mattackDamage, string mattackSound)
     {
         attackName = mattackName;
         attackDamage = mattackDamage;
+        attackSound = mattackSound;
     }
 }
 
@@ -19,9 +21,9 @@ public class Attack
 public class AttackDatabase : MonoBehaviour
 {
     // Create the attack objects
-    Attack Tackle = new Attack("Tackle", 1);
-    Attack CubeBlast = new Attack("Cube Blast", 2);
-    Attack SphereBlast = new Attack("Sphere Blast", 2);
+    Attack Tackle = new Attack("Tackle", 1, "fAttackTackle");
+    Attack CubeBlast = new Attack("Cube Blast", 2, "fAttackBlast");
+    Attack SphereBlast = new Attack("Sphere Blast", 2, "fAttackBlast");
 
     // Create the attack Dictionary
     Dictionary<string, Attack> AttackDictionary = new Dictionary<string, Attack>();
@@ -46,6 +48,10 @@ public class AttackDatabase : MonoBehaviour
         return intToReturn;
     }
 
-
+    public string GetAttackSound(string attack)
+    {
+        string stringToReturn = AttackDictionary[attack].attackSound;
+        return stringToReturn;
+    }
 
 }

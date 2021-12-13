@@ -11,6 +11,8 @@ public class BattleManager : MonoBehaviour
     // Other Objects that need to be referenced
     [SerializeField]
     AttackDatabase attackDatabase;
+    [SerializeField]
+    AudioManager audioManager;
     
     // UI Stuff
     [SerializeField]
@@ -96,7 +98,7 @@ public class BattleManager : MonoBehaviour
         battleUIManager.UpdateOpponentGeomonHPDisplay(opponentGeomon.currentHP, opponentGeomon.maximumHP);
 
         // Update the Attack buttons
-        dialogueManager.UpdateAttackButtonText(yourGeomon.Attack1, yourGeomon.Attack2);
+        dialogueManager.UpdateAttackButtonText(attackDatabase.GetAttackName(yourGeomon.Attack1), attackDatabase.GetAttackName(yourGeomon.Attack2));
 
         StartBattle();
     }
@@ -145,6 +147,10 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("Battle is Over");
         }
+
+        // Play Audio when the button is clicked
+        audioManager.playInterfaceFx("fInterfaceInput");
+
     }
 
     // *** Start of Main Battle Phase Functions *** //
@@ -216,6 +222,7 @@ public class BattleManager : MonoBehaviour
     }
 
     // Announces what attack the player has selected TODO plays the animation for the attack
+    // In future I would refactor so that the display attack/play sound is a more generalized function
     void DeclareAttack()
     {
         if (isPlayerTurn == true)
@@ -226,6 +233,9 @@ public class BattleManager : MonoBehaviour
             // Display the attack to the player
             Debug.Log(yourActiveGeomonName + " used " + attackname);
             dialogueManager.DisplayDialogue(yourActiveGeomonName + " used " + attackname + "!");
+
+            // Play Audio for the attack
+            audioManager.playFx(attackDatabase.GetAttackSound(selectedPlayerAttackName));
         }
         else
         {
@@ -236,8 +246,14 @@ public class BattleManager : MonoBehaviour
             // Display the opponent's attack to the player
             Debug.Log(opponentName + "'s " + opponentActiveGeomonName + " used " + attackname);
             dialogueManager.DisplayDialogue(opponentName + "'s " + opponentActiveGeomonName + " used " + attackname + "!");
+
+            // Play Audio for the attack
+            audioManager.playFx(attackDatabase.GetAttackSound(selectedOpponentAttackName));
         }
+
         
+   
+
         lastBattlePhase = BattlePhase.DeclareAttack;
     }
 
@@ -268,6 +284,9 @@ public class BattleManager : MonoBehaviour
             dialogueManager.DisplayDialogue("Your " + yourActiveGeomonName + " took " + attackDamage + " damage!");
             Debug.Log("Your " + yourActiveGeomonName + " took " + attackDamage + " damage!");
         }
+
+        // Taking Damage Audio
+        audioManager.playFx("fTakeDamage");
 
         // Debug stuff
         checkAllGeomon();
@@ -370,6 +389,9 @@ public class BattleManager : MonoBehaviour
     {
         dialogueManager.DisplayDialogue("You have won the battle!");
         Debug.Log("You have won the battle!");
+
+        // Play Audio when Victory Achieved
+        audioManager.playMusic("mVictory");
     }
 
     // *** End of Battle Helper Functions *** //
