@@ -28,7 +28,7 @@ public class AttackDatabase : MonoBehaviour
     // Create the attack Dictionary
     Dictionary<string, Attack> AttackDictionary = new Dictionary<string, Attack>();
 
-    public void Start()
+    public void Awake()
     {
         // Add Attacks to dictionary
         AttackDictionary.Add("Tackle", Tackle);
