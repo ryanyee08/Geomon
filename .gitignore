@@ -37,4 +37,4 @@ sysinfo.txt
 *.unitypackage
 
 # Audio
-/Assets/Audio
+/Assets/Audio/
