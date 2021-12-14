@@ -27,6 +27,10 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip musicBattle;
     public AudioClip musicVictory;
+    public AudioClip musicRival;
+    public AudioClip musicMainMenu;
+    public AudioClip musicEuclidTown;
+    public AudioClip musicProfShrubLab;
 
 
     // Start is called before the first frame update
@@ -35,7 +39,10 @@ public class AudioManager : MonoBehaviour
         //Load Audio Dictionary
         AudioDictionary.Add("mBattle", musicBattle);
         AudioDictionary.Add("mVictory", musicVictory);
-
+        AudioDictionary.Add("mRival", musicRival);
+        AudioDictionary.Add("mMainMenu", musicMainMenu);
+        AudioDictionary.Add("mEuclidTown", musicEuclidTown);
+        AudioDictionary.Add("mProfShrubLab", musicProfShrubLab);
 
         AudioDictionary.Add("fInterfaceInput", fxInterfaceInput);
         AudioDictionary.Add("fTakeDamage", fxTakeDamage);
@@ -43,12 +50,6 @@ public class AudioManager : MonoBehaviour
         AudioDictionary.Add("fAttackTackle", fxAttackTackle);
         AudioDictionary.Add("fAttackBlast", fxAttackBlast);
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // Loads an  Audioclip to the music source and plays it
@@ -73,7 +74,7 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    // Loads an  Audioclip to the Fx source and plays it
+    // Loads an  Audioclip to the Fx Battle source and plays it
     [YarnCommand("playFx")]
     public void playFx(string audiofile)
     {
@@ -83,6 +84,7 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    // Loads an Audioclip to the Fx Interface source and plays it
     public void playInterfaceFx(string audiofile)
     {
         fxInterfaceSource.clip = AudioDictionary[audiofile];
@@ -104,9 +106,4 @@ public class AudioManager : MonoBehaviour
     {
         ambienceSource.Stop();
     }
-
-    // Stops playback of Fx
-
 }
-
-//Okay so i think what i need to do to change tracks is to set the new clip as AudioSource.clip = the clip I want and then do Audio.Play

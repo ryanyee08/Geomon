@@ -88,7 +88,6 @@ public class BattleManager : MonoBehaviour
         Button attk2btn = attackButton2.GetComponent<Button>();
         attk2btn.onClick.AddListener(() => SelectAttack(2));
 
-
         // Update the battle Displays
         battleUIManager.UpdateYourGeomonNameDisplay(yourGeomon.geomonName);
         battleUIManager.UpdateOpponentGeomonNameDisplay(opponentGeomon.geomonName);
@@ -150,7 +149,6 @@ public class BattleManager : MonoBehaviour
 
         // Play Audio when the button is clicked
         audioManager.playInterfaceFx("fInterfaceInput");
-
     }
 
     // *** Start of Main Battle Phase Functions *** //
@@ -251,9 +249,6 @@ public class BattleManager : MonoBehaviour
             audioManager.playFx(attackDatabase.GetAttackSound(selectedOpponentAttackName));
         }
 
-        
-   
-
         lastBattlePhase = BattlePhase.DeclareAttack;
     }
 
@@ -330,6 +325,7 @@ public class BattleManager : MonoBehaviour
         dialogueManager.DisplayAdvanceTurnButton();
     }
 
+    // Used to select an attack for the opponent during their turn
     public string OpponentAttackSelection()
     {
         string attackname = "String";

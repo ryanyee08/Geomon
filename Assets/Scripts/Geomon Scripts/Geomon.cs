@@ -31,5 +31,4 @@ public class Geomon
             hasFainted = true;
         }
     }
-
 }
