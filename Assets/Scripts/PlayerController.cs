@@ -10,6 +10,10 @@ public class PlayerController : MonoBehaviour
     private NavMeshAgent agent;
     Camera main;
 
+    // Used to check to see if a dialogue is currently being displayed
+    [SerializeField]
+    GameObject DialogueUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +24,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) & DialogueUI.activeSelf == false)
         {
             MoveToTarget();
         }
