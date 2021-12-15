@@ -96,7 +96,7 @@ public class BattleManager : MonoBehaviour
         battleUIManager.UpdateYourGeomonHpDisplay(yourGeomon.currentHP, yourGeomon.maximumHP);
         battleUIManager.UpdateOpponentGeomonHPDisplay(opponentGeomon.currentHP, opponentGeomon.maximumHP);
 
-        // Update the Attack buttons 
+        // Update the Attack button Text 
         dialogueManager.UpdateAttackButtonText(attackDatabase.GetAttackName(yourGeomon.Attack1), attackDatabase.GetAttackName(yourGeomon.Attack2));
 
         StartBattle();

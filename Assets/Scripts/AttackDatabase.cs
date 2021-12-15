@@ -17,6 +17,8 @@ public class Attack
     }
 }
 
+// TODO - In the future the attack database should be static 
+
 // Attack Database is basically a dictionary that contains every possible attack in the game
 public class AttackDatabase : MonoBehaviour
 {

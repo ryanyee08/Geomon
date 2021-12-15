@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) & DialogueUI.activeSelf == false)
+        // Should only move when the dialogue window is not up, also should not move when interacting with UI elements
+        if (Input.GetMouseButtonDown(0) & DialogueUI.activeSelf == false & !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
             MoveToTarget();
         }
