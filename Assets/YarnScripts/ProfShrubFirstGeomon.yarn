@@ -7,15 +7,17 @@ ProfessorShrub: "Hello, What did you need again?"
 ProfessorShrub: "Oh that's right!"
 <<playVoiceOver AudioManager ProfessorShrub 2>>
 ProfessorShrub: "As I mentioned earlier take this Geo Monster."
+You received a Cubis!
 <<playMusic AudioManager mRival>>
 RivalName: "Hey Stop!"
 <<playVoiceOver AudioManager ProfessorShrub 3>>
 ProfessorShrub: "Why are you here already?"
 <<playVoiceOver AudioManager ProfessorShrub 4>>
-ProfessorShrub: "I Thought I told your mother I was busy until this evening."
+ProfessorShrub: "I thought I told your mother I was busy until this evening."
 RivalName: "Grandpa you promised me you'd give me a Geo Monster!"
 <<playVoiceOver AudioManager ProfessorShrub 5>>
 ProfessorShrub: "Fine, You can have one too. I have plenty more."
+Rival received a Sphero!
 RivalName: "Cool!"
 RivalName: "Look how smooth and awesome my Geo Monster is!"
 RivalName: "Haha your Geo Monster is all square and lame!"
