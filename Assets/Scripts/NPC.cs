@@ -11,17 +11,16 @@ public class NPC : InteractableObject
     [SerializeField]
     public DialogueRunner dialogueRunner;
 
+    // Add Audio to the NPC from the editor
+    // Audio is accessed through AudioManager which is triggered by the Yarn Script
+    [SerializeField]
+    public List<AudioClip> NPCDialogue = new List<AudioClip>();
+
     // Start is called before the first frame update
     public override void Awake()
     {
         base.Awake();
         dialogueRunner = GameObject.Find("DialogueRunner").GetComponent<DialogueRunner>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public override void AssignedButtonTask()
@@ -31,5 +30,12 @@ public class NPC : InteractableObject
         dialogueRunner.Clear();
         dialogueRunner.Add(scriptToLoad);
         dialogueRunner.StartDialogue("Start");
+    }
+
+    public AudioClip GetAudioClip(int indexPosition)
+    {
+        AudioClip AudioClipToReturn = NPCDialogue[indexPosition];
+
+        return AudioClipToReturn;
     }
 }

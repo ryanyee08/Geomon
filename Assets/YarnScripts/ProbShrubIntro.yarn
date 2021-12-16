@@ -1,20 +1,37 @@
 ﻿title: Start
 tags:
 ---
+<<playVoiceOver AudioManager ProfessorShrub 0>>
 Why Hello there.
+<<playVoiceOver AudioManager ProfessorShrub 1>>
 Welcome to the exciting world of Geo Monsters!
-My name is professor Shrub, and I am a tenured professor specializing in geo monster biology.
+<<playVoiceOver AudioManager ProfessorShrub 2>>
+My name is Professor Shrub, and I am a tenured professor specializing in Geo Monster biology.
+<<playVoiceOver AudioManager ProfessorShrub 3>>
 As you know, about 10 years ago these random geometric creatures began to appear all over the world.
+<<playVoiceOver AudioManager ProfessorShrub 4>>
 No one knew where they came from or what they were here for.
+<<playVoiceOver AudioManager ProfessorShrub 5>>
 So Naturally, we started to collect them and made them fight each other for sport.
+<<playVoiceOver AudioManager ProfessorShrub 6>>
 First, what is your name?
+<<playVoiceOver AudioManager ProfessorShrub 7>>
 Great!
+<<playVoiceOver AudioManager ProfessorShrub 8>>
 This is my grandson.
+<<playVoiceOver AudioManager ProfessorShrub 9>>
 You've been rivals for as long as I can remember.
-Oh my, this is a bit embarrassing.
+<<playVoiceOver AudioManager ProfessorShrub 10>>
+Oh my!
+<<playVoiceOver AudioManager ProfessorShrub 11>>
+This is a bit embarrassing.
+<<playVoiceOver AudioManager ProfessorShrub 12>>
 What was his name again?
+<<playVoiceOver AudioManager ProfessorShrub 13>>
 That's right, I remember now.
+<<playVoiceOver AudioManager ProfessorShrub 14>>
 You're very own Geo Monster journey is about to begin!
+<<playVoiceOver AudioManager ProfessorShrub 15>>
 Let's Get Started!
-
+<<StartOverWorld TutorialManager>>
 ===

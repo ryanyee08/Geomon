@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 57868e2c4f4c2bc4881e7482b112c15e, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1722,6 +1722,7 @@ MonoBehaviour:
   musicSource: {fileID: 1583445441}
   fxSource: {fileID: 1583445442}
   fxInterfaceSource: {fileID: 1583445443}
+  dialogueSource: {fileID: 0}
   ambienceRain: {fileID: 0}
   fxInterfaceInput: {fileID: 8300000, guid: 3008ec992ff7ae0468d292c1528ddb70, type: 3}
   fxTakeDamage: {fileID: 8300000, guid: 78513b8bc2149db4eac609f7a415b737, type: 3}

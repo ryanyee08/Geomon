@@ -1,0 +1,36 @@
+﻿title: Start
+tags:
+---
+<<playVoiceOver AudioManager ProfessorShrub 0>>
+ProfessorShrub: "Hello, What did you need again?"
+<<playVoiceOver AudioManager ProfessorShrub 1>>
+ProfessorShrub: "Oh that's right!"
+<<playVoiceOver AudioManager ProfessorShrub 2>>
+ProfessorShrub: "As I mentioned earlier take this Geo Monster."
+<<playMusic AudioManager mRival>>
+RivalName: "Hey Stop!"
+<<playVoiceOver AudioManager ProfessorShrub 3>>
+ProfessorShrub: "Why are you here already?"
+<<playVoiceOver AudioManager ProfessorShrub 4>>
+ProfessorShrub: "I Thought I told your mother I was busy until this evening."
+RivalName: "Grandpa you promised me you'd give me a Geo Monster!"
+<<playVoiceOver AudioManager ProfessorShrub 5>>
+ProfessorShrub: "Fine, You can have one too. I have plenty more."
+RivalName: "Cool!"
+RivalName: "Look how smooth and awesome my Geo Monster is!"
+RivalName: "Haha your Geo Monster is all square and lame!"
+RivalName: "Just like you!"
+RivalName: "I Bet my Geo Monster can beat your's in a Geo Monster Battle!"
+<<playVoiceOver AudioManager ProfessorShrub 6>>
+ProfessorShrub: "Hey!"
+<<playVoiceOver AudioManager ProfessorShrub 7>>
+ProfessorShrub: "If you two are going to battle then do it outside."
+<<playVoiceOver AudioManager ProfessorShrub 8>>
+ProfessorShrub: "I still have a metric ton of science stuff to do."
+<<playVoiceOver AudioManager ProfessorShrub 9>>
+ProfessorShrub: "And the last thing I need is you two breaking something."
+<<playVoiceOver AudioManager ProfessorShrub 10>>
+ProfessorShrub: "Anyways out with you both!"
+RivalName: "Alright let's take this outside."
+<<StartFirstBattle TutorialManager>>
+===

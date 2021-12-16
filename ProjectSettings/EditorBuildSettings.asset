@@ -6,12 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BattleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/MainMenu.unity
+    guid: 61704639d93183d4cb8849c23fad4f48
+  - enabled: 1
+    path: Assets/Scenes/NewPlayerIntro.unity
+    guid: 906608cfbdfeae64985d346012cb308b
   - enabled: 1
     path: Assets/Scenes/EuclidTown.unity
     guid: 7d3c670a67a930a4ab8e2694f3cc37eb
   - enabled: 1
     path: Assets/Scenes/ProfessorScrubLab.unity
     guid: aa35bcd0c091ec146af74179e465c7b2
+  - enabled: 1
+    path: Assets/Scenes/BattleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource fxSource;
     public AudioSource fxInterfaceSource;
+    public AudioSource dialogueSource;
 
     // Dictionary is neccesary because YarnSpinner commands can only pass strings
     Dictionary<string, AudioClip> AudioDictionary = new Dictionary<string, AudioClip>();
@@ -91,6 +92,23 @@ public class AudioManager : MonoBehaviour
         fxInterfaceSource.Play();
         Debug.Log("playfxinterface audio should now be: " + audiofile);
 
+    }
+
+    // Loads an Audioclip stored in an NPX to the dialogue source and plays it
+    [YarnCommand("playVoiceOver")]
+    public void playVoiceOver(string NPCGameObjectName, string dialoguelistindexstring)
+    {
+        int dialoguelistindex;
+        // Yarn can only input strings so need to convert string to int
+        int.TryParse(dialoguelistindexstring, out dialoguelistindex);
+
+        // Find the NPC Object
+        NPC SpeakingNPC = GameObject.Find(NPCGameObjectName).GetComponent<NPC>();
+
+        // Access the VO list and load the clip for playback
+        dialogueSource.clip = SpeakingNPC.GetAudioClip(dialoguelistindex);
+        dialogueSource.Play();
+        Debug.Log("playVoiceOver Audio should be index " + dialoguelistindex + " from " + NPCGameObjectName);
     }
 
     // Need a function that 
