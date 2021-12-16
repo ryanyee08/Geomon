@@ -23,6 +23,6 @@ public class Doorway : InteractableObject
 
     public override void AssignedButtonTask()
     {
-        SceneManager.LoadScene("ProfessorScrubLab");
+        SceneManager.LoadScene(SceneName);
     }
 }

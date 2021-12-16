@@ -26,8 +26,7 @@ public class InteractableObject : MonoBehaviour
         // However in the future all of this modifying the UI Logic should be moved to the U
         
         // First Find the UI Manager
-        GameObject OverworldUIManager = GameObject.Find("OverworldUIManager");
-        UIManager = OverworldUIManager.GetComponent<OverWorldUIManager>();
+        UIManager = GameObject.Find("OverworldUIManager").GetComponent<OverWorldUIManager>();
 
         // So basically I ran into problems here because I was trying to find an inactive object since the popup is by default inactive
         // A better solution would probably be to find way to move the addlistener logic to the UIManager
@@ -62,6 +61,7 @@ public class InteractableObject : MonoBehaviour
     // In the future I would like to find a way to fix it so that attaching a function to the button is handled solely by UI Manager
     public virtual void AssignedButtonTask()
     {
+        UIManager.HideInteractionWindow();
         Debug.Log("I don't do anything");
     }
 
