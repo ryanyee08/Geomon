@@ -24,11 +24,10 @@ public class BattleManager : MonoBehaviour
     public Button attackButton1;
     public Button attackButton2;
 
-    // Data from GameManager (todo)
     [SerializeField]
-    string opponentName = "Blue";
+    string opponentName;
     [SerializeField]
-    string playerName = "Red";
+    string playerName;
 
     // Management of Battle
     [SerializeField]
@@ -72,6 +71,12 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Get the Rival Names
+        // Todo In the future there will be more opponents than your rival
+        // Will need to add a field for NextOpponent to GameManager that wil determine who you are fighting in the battle
+        opponentName = GameManager.GameManagerInstance.RivalName;
+        playerName = GameManager.GameManagerInstance.PlayerName;
+        
         // This is temporary and should be refactored into Geomon Manager
         yourActiveGeomonName = yourGeomon.geomonName;
         opponentActiveGeomonName = opponentGeomon.geomonName;

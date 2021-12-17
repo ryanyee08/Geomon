@@ -1576,8 +1576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e932bba43354094baa520d5917b2a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: Red
-  rivalName: Blue
 --- !u!4 &1336654426
 Transform:
   m_ObjectHideFlags: 0

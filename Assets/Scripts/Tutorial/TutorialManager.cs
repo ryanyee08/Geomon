@@ -54,14 +54,16 @@ public class TutorialManager : MonoBehaviour
         // Save whatever text is in the input to the game manager
         if (isPlayernNameSaved == false)
         {
-            GameManager.GameManagerInstance.playerName = GameObject.Find("NameInputField").GetComponent<TMP_InputField>().text;
+            GameManager.GameManagerInstance.PlayerName = GameObject.Find("NameInputField").GetComponent<TMP_InputField>().text;
             isPlayernNameSaved = true;
         }
         else
         {
-            GameManager.GameManagerInstance.rivalName = GameObject.Find("NameInputField").GetComponent<TMP_InputField>().text;
+            GameManager.GameManagerInstance.RivalName = GameObject.Find("NameInputField").GetComponent<TMP_InputField>().text;
         }
-        
+
+        // Clear the Input Field
+        GameObject.Find("NameInputField").GetComponent<TMP_InputField>().text = "";
 
         // Find the Intro UI Manager
         IntroUIManager IntroUIManager = GameObject.Find("Canvas").GetComponent<IntroUIManager>();
