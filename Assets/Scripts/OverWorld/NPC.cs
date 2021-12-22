@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 
+// INHERITANCE
 public class NPC : InteractableObject
 {
     [SerializeField]
@@ -23,6 +24,7 @@ public class NPC : InteractableObject
         dialogueRunner = GameObject.Find("DialogueRunner").GetComponent<DialogueRunner>();
     }
 
+    // POLYMORPHISM
     public override void AssignedButtonTask()
     {
         base.AssignedButtonTask();

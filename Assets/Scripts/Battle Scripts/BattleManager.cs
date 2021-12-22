@@ -316,6 +316,7 @@ public class BattleManager : MonoBehaviour
         lastBattlePhase = BattlePhase.DeclareDamage;
     }
 
+    // ABSTRACTION
     void EndTurn()
     {
         CheckVictory();

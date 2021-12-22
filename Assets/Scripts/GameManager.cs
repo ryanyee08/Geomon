@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager GameManagerInstance;
 
+    // ENCAPSULATION
     // Stores the Player's name
     private string playerName = "Crimson";
     public string PlayerName
