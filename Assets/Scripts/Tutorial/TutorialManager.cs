@@ -12,16 +12,23 @@ public class TutorialManager : MonoBehaviour
 {
     bool isPlayernNameSaved = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-   
-    }
+    [SerializeField]
+    GameObject Rival;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField]
+    YarnProgram EuclidTownIntroScript;
+
+    public void Start()
     {
-        
+        // Find the Dialgoue Runner and load it with the Euclid Town Intro if the player hasn't seen it yet
+        if (GameManager.GameManagerInstance.isEuclidTownFirstDialgueViewed == false && GameManager.GameManagerInstance.isNewPlayerIntroCompleted == true)
+        {
+            Debug.Log("Displaying Euclid Town Tutorial");
+            DialogueRunner dialogueRunner = GameObject.Find("DialogueRunner").GetComponent<DialogueRunner>();
+            dialogueRunner.Add(EuclidTownIntroScript);
+            dialogueRunner.StartDialogue("EuclidTownIntro");
+        }
+
     }
 
     // Starts a new game and begins the intro sequence
@@ -73,6 +80,7 @@ public class TutorialManager : MonoBehaviour
     }
 
     // This function is called at the end of the intro sequence and loads the player to the game
+    // Todo in future this is a good candidate to move to the Yarn Utility script
     [YarnCommand("StartOverWorld")]
     public void StartOverWorld()
     {
@@ -85,4 +93,34 @@ public class TutorialManager : MonoBehaviour
     {
         SceneManager.LoadScene("BattleScene");
     }
-}
+
+    // This function spawns a rival
+    [YarnCommand("SpawnRival")]
+    public void SpawnRival()
+    {
+        Vector3 RivalSpawn = GameObject.Find("RivalSpawnPoint").transform.position;
+        Instantiate(Rival, RivalSpawn, Quaternion.identity);
+
+    }
+
+    [YarnCommand("DespawnRival")]
+    public void DespawnRival()
+    {
+        GameObject Rival = GameObject.Find("Rival(Clone)");
+        Destroy(Rival);
+    }
+
+    [YarnCommand("MarkIntroComplete")]
+    public void MarkIntroComplete()
+    {
+        GameManager.GameManagerInstance.isNewPlayerIntroCompleted = true;
+        Debug.Log("The Player has completed Prof Shrubs New Player Intro");
+    }
+
+    [YarnCommand("MarkEuclidTownIntroComplete")]
+    public void MarkEuclidTownIntroComplete()
+    {
+        GameManager.GameManagerInstance.isEuclidTownFirstDialgueViewed = true;
+        Debug.Log("The Player has viewed the first dialgoue in Euclid Town");
+    }
+} 

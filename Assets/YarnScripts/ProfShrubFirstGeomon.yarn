@@ -10,6 +10,7 @@ tags:
 <<playVoiceOver AudioManager ProfessorShrub 2>>
 {$profShrub}: "As I mentioned earlier take this Geo Monster."
 You received a Cubis!
+<<SpawnRival TutorialManager>>
 <<playMusic AudioManager mRival>>
 {$rivalName}: "Hey Stop!"
 <<playVoiceOver AudioManager ProfessorShrub 3>>

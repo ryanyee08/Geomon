@@ -61,6 +61,10 @@ public class GameManager : MonoBehaviour
     // Notes player's current location
     public bool isPlayerInBuilding = false;
 
+    // Marks Progress through Initial Tutorials
+    public bool isNewPlayerIntroCompleted = false;
+    public bool isEuclidTownFirstDialgueViewed = false;
+
     private void Awake()
     {
         //Implement a Singleton pattern - will prevent more than one instance from occuring

@@ -55,7 +55,13 @@ public class BattleManager : MonoBehaviour
         DeclareAttack,
         DeclareDamage,
         Endturn,
-        EndBattle
+        EndBattle,
+        ExperienceGained,
+        LevelUp,
+        OpponentDefeated,
+        GeoCoinsReceived,
+        TempMessageToPlayer
+
     }
 
     [SerializeField]
@@ -113,7 +119,7 @@ public class BattleManager : MonoBehaviour
         if (lastBattlePhase == BattlePhase.StartBattle)
         {
             DecideTurnOrder();
-        } 
+        }
         //else if (lastBattlePhase == BattlePhase.DecideTurnOrder)
         //{
         //    SelectGeomon();
@@ -149,7 +155,23 @@ public class BattleManager : MonoBehaviour
         }
         else if (lastBattlePhase == BattlePhase.EndBattle)
         {
-            Debug.Log("Battle is Over");
+            ExperienceGained();
+        }
+        else if (lastBattlePhase == BattlePhase.ExperienceGained)
+        {
+            LevelUp();
+        }
+        else if (lastBattlePhase == BattlePhase.LevelUp) 
+        {
+            OpponentDefeated();
+        }
+        else if (lastBattlePhase == BattlePhase.OpponentDefeated)
+        {
+            GeoCoinsReceived();
+        }
+        else if (lastBattlePhase == BattlePhase.GeoCoinsReceived)
+        {
+            TempLastMessage();
         }
 
         // Play Audio when the button is clicked
@@ -393,6 +415,37 @@ public class BattleManager : MonoBehaviour
 
         // Play Audio when Victory Achieved
         audioManager.playMusic("mVictory");
+    }
+
+    void ExperienceGained()
+    {
+        dialogueManager.DisplayDialogue("Your Cubis gained 500 experience points!");
+        lastBattlePhase = BattlePhase.ExperienceGained;
+    }
+
+    void LevelUp()
+    {
+        dialogueManager.DisplayDialogue("Your " + yourActiveGeomonName + " grew to level 6!");
+        yourGeomon.level = 6;
+        battleUIManager.UpdateYourGeomonLevelDisplay(yourGeomon.level);
+        lastBattlePhase = BattlePhase.LevelUp;
+    }
+
+    void OpponentDefeated()
+    {
+        dialogueManager.DisplayDialogue(playerName + " defeated " + opponentName);
+        lastBattlePhase = BattlePhase.OpponentDefeated;
+    }
+
+    void GeoCoinsReceived()
+    {
+        dialogueManager.DisplayDialogue("You received 500 GeoCoins!");
+        lastBattlePhase = BattlePhase.GeoCoinsReceived;
+    }
+
+    void TempLastMessage()
+    {
+        dialogueManager.DisplayDialogue("Thanks for playing my Create with Code: Programming Theory in Action Submission!");
     }
 
     // *** End of Battle Helper Functions *** //
