@@ -35,7 +35,7 @@ What was his name again?
 <<SaveName TutorialManager>>
 <<SetRivalName DialogueUtilities>>
 <<playVoiceOver AudioManager ProfessorShrub 13>>
-His name is {$rivalName}! Ah! That's right, I remember now.
+His name is {$rivalName}. Ah That's right! I remember now.
 <<DespawnRival TutorialManager>>
 <<playVoiceOver AudioManager ProfessorShrub 14>>
 You're very own Geo Monster journey is about to begin!

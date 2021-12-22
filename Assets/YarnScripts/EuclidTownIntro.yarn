@@ -3,10 +3,8 @@ tags:
 ---
 <<SetPlayerName DialogueUtilities>>
 Happy Birthday {$playerName}!
-You've spent your entire life growing up here in peaceful Euclid Town.
-But since the day you were born you have always known that it was your destiny to become the world's greatest Geo Monster Trainer!
-Now that you're a fully grown ten years old, it's time for your to seek your destiny out in the wild and dangerous world of Geo Monsters.
-Your Journey Starts Today!
+Since the day you were born you have always known that it was your destiny to become the world's greatest Geo Monster Trainer.
+Now that you're a fully grown ten year old, it's time for your to seek your destiny out in the wild and dangerous world of Geo Monsters!
 To get started you're going to need a Geo Monster of your very own.
 Left-Click the ground to move and start looking for your first Geo Monster!
 <<MarkEuclidTownIntroComplete TutorialManager>>

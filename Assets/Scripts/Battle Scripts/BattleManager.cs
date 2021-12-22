@@ -427,7 +427,9 @@ public class BattleManager : MonoBehaviour
     {
         dialogueManager.DisplayDialogue("Your " + yourActiveGeomonName + " grew to level 6!");
         yourGeomon.level = 6;
+        yourGeomon.maximumHP = 16;
         battleUIManager.UpdateYourGeomonLevelDisplay(yourGeomon.level);
+        battleUIManager.UpdateYourGeomonHpDisplay(yourGeomon.currentHP, yourGeomon.maximumHP);
         lastBattlePhase = BattlePhase.LevelUp;
     }
 
