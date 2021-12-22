@@ -18,6 +18,7 @@ public class DialogueUtilities : MonoBehaviour
         // Note that playername should be a default variable inside the InMemmoryVariableStorage component
         variableStorage = GameObject.FindObjectOfType<InMemoryVariableStorage>();
         variableStorage.SetValue("$playerName", GameManager.GameManagerInstance.PlayerName);
+        Debug.Log("Player Name saved to variable storage");
     }
 
     [YarnCommand("SetRivalName")]
@@ -26,6 +27,7 @@ public class DialogueUtilities : MonoBehaviour
         // Note that rivalName should be a default variable inside the InMemoryVariableStorage component
         variableStorage = GameObject.FindObjectOfType<InMemoryVariableStorage>();
         variableStorage.SetValue("$rivalName", GameManager.GameManagerInstance.RivalName);
+        Debug.Log("Rival Name saved to variable storage");
     }
 
 }

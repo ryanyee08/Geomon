@@ -979,7 +979,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -7751860113445326353, guid: 0c0c7e1dd62aa414ba11330b9b5dc4a4, type: 2}
-  m_audioClip: {fileID: 8300000, guid: b58494b6d1622334aac40912ee6b2243, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8dbdeabb06c6b5848912e9e0ee5e3a20, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1270,8 +1270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e932bba43354094baa520d5917b2a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: Red
-  rivalName: Blue
 --- !u!4 &2113927800
 Transform:
   m_ObjectHideFlags: 0

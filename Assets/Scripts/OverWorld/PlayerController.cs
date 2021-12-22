@@ -14,11 +14,24 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject DialogueUI;
 
+    private void Awake()
+    {
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         main = Camera.main;
+
+        Debug.Log("Player is located at: " + transform.position);
+        // If the player is spawning in the overworld after having left it, we should put them back at their last position.
+        if (GameManager.GameManagerInstance.isPlayerInBuilding == false)
+        {
+            transform.position = GameManager.GameManagerInstance.lastOverWorldPosition;
+        }
+        Debug.Log("Player is located at: " + transform.position);
     }
 
     // Update is called once per frame

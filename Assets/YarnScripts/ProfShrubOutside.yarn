@@ -2,9 +2,9 @@
 tags:
 ---
 <<playVoiceOver AudioManager ProfessorShrub 0>>
-ProfessorShrub: "Wait! It's dangerous to go alone!"
+{$profShrub}: "Wait! It's dangerous to go alone!"
 <<playVoiceOver AudioManager ProfessorShrub 1>>
-ProfessorShrub: "There are wild Geo Monsters just outside of town."
+{$profShrub}: "There are wild Geo Monsters just outside of town."
 <<playVoiceOver AudioManager ProfessorShrub 2>>
-ProfessorShrub: "Come back to my laboratory and I'll give you a Geo Monster of your own for protection."
+{$profShrub}: "Come back to my laboratory and I'll give you a Geo Monster of your own for protection."
 ===

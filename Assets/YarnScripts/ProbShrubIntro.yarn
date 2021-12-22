@@ -17,8 +17,9 @@ So Naturally, we started to collect them and made them fight each other for spor
 <<RequestName TutorialManager>>
 First, what is your name?
 <<SaveName TutorialManager>>
+<<SetPlayerName DialogueUtilities>>
 <<playVoiceOver AudioManager ProfessorShrub 7>>
-Great!
+Great! It's a pleasure to meet you {$playerName}
 <<playVoiceOver AudioManager ProfessorShrub 8>>
 This is my grandson.
 <<playVoiceOver AudioManager ProfessorShrub 9>>
@@ -31,8 +32,9 @@ This is a bit embarrassing.
 <<RequestName TutorialManager>>
 What was his name again?
 <<SaveName TutorialManager>>
+<<SetRivalName DialogueUtilities>>
 <<playVoiceOver AudioManager ProfessorShrub 13>>
-That's right, I remember now.
+Ah his name is {$rivalName}! That's right, I remember now.
 <<playVoiceOver AudioManager ProfessorShrub 14>>
 You're very own Geo Monster journey is about to begin!
 <<playVoiceOver AudioManager ProfessorShrub 15>>

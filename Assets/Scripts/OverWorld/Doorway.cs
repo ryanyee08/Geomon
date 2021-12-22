@@ -9,6 +9,9 @@ public class Doorway : InteractableObject
     [SerializeField]
     string SceneName;
 
+    [SerializeField]
+    bool exitsOverworld;
+
     // Start is called before the first frame update
     public override void Awake()
     {
@@ -23,6 +26,17 @@ public class Doorway : InteractableObject
 
     public override void AssignedButtonTask()
     {
+        // If doorway leads from the overworld to another scene then we need to save the current position to GameManager for when player leaves the building 
+        if (exitsOverworld == true)
+        {
+            GameManager.GameManagerInstance.lastOverWorldPosition = transform.position;
+            GameManager.GameManagerInstance.isPlayerInBuilding = true;
+        }
+        else
+        {
+            GameManager.GameManagerInstance.isPlayerInBuilding = false;
+        }
+
         SceneManager.LoadScene(SceneName);
     }
 }

@@ -1926,6 +1926,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e932bba43354094baa520d5917b2a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: Crimson
+  rivalName: Azure
 --- !u!4 &487364057
 Transform:
   m_ObjectHideFlags: 0
@@ -3192,7 +3194,6 @@ GameObject:
   - component: {fileID: 1220292521}
   - component: {fileID: 1220292520}
   - component: {fileID: 1220292518}
-  - component: {fileID: 1220292519}
   m_Layer: 5
   m_Name: DialogueRunner
   m_TagString: Untagged
@@ -3314,26 +3315,6 @@ MonoBehaviour:
   onCommand:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1220292519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220292517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 610c541718d694070a21327d1ae62e75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultVariables:
-  - name: playerName
-    value: Crimson
-    type: 1
-  - name: rivalName
-    value: Azure
-    type: 1
-  debugTextView: {fileID: 0}
 --- !u!114 &1220292520
 MonoBehaviour:
   m_ObjectHideFlags: 0

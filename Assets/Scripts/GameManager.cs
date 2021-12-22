@@ -54,6 +54,13 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    // Stores the player's last position when the player transitions between the overworld and buildings/new scenes
+    public Vector3 lastOverWorldPosition = new Vector3(-12, 1, -5);
+
+    // Notes player's current location
+    public bool isPlayerInBuilding = false;
+
     private void Awake()
     {
         //Implement a Singleton pattern - will prevent more than one instance from occuring

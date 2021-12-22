@@ -15,8 +15,8 @@ You received a Cubis!
 <<playVoiceOver AudioManager ProfessorShrub 3>>
 {$profShrub}: "Why are you here already?"
 <<playVoiceOver AudioManager ProfessorShrub 4>>
-ProfessorShrub: "I thought I told your mother I was busy until this evening."
-{$profShrub}: "Grandpa you promised me you'd give me a Geo Monster!"
+{$profShrub}: "I thought I told your mother I was busy until this evening."
+{$rivalName}: "Grandpa you promised me you'd give me a Geo Monster!"
 <<playVoiceOver AudioManager ProfessorShrub 5>>
 {$profShrub}: "Fine, You can have one too. I have plenty more."
 Rival received a Sphero!
