@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/* =========================
+ * = GEOMON BATTLE MANAGER =
+ * =========================
+ */
+
 // BattleManager is responsible for the flow of the battle and determining victory conditions
 // It will take in input by the player and output the results of the player's decision through dialogueManager
 // It will eventually read the data from YourGeomon and OpponentGeomon objects
@@ -43,6 +48,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     string opponentActiveGeomonName;
 
+    // State machine states
     enum BattlePhase
     {
         StartBattle,
@@ -74,7 +80,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     string selectedOpponentAttackName;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update 
     void Start()
     {
         // Get the Rival Names
@@ -113,18 +119,20 @@ public class BattleManager : MonoBehaviour
         StartBattle();
     }
 
+    // In the future I would rewrite this as a switch
+    // Decription: State machine to determine what to do in the battle
     void AdvanceBattle()
     {
-        // In the future I would rewrite this as a switch
+        Debug.Log(lastBattlePhase);
         if (lastBattlePhase == BattlePhase.StartBattle)
         {
             DecideTurnOrder();
         }
+        // THe Line below would would be selectGeomon but its being skipped for now
         //else if (lastBattlePhase == BattlePhase.DecideTurnOrder)
         //{
         //    SelectGeomon();
         //}
-        // THe ine below would would be selectGeomon but its being skipped for now
         else if (lastBattlePhase == BattlePhase.DecideTurnOrder)
         {
             StartTurn();
@@ -183,7 +191,7 @@ public class BattleManager : MonoBehaviour
     // Battle Start - Displaying the initial prompt to the player
     void StartBattle()
     {
-        string StartbattleText = opponentName + " wants to fight!";
+         string StartbattleText = opponentName + " wants to fight!";
 
         dialogueManager.DisplayDialogue(StartbattleText);
         Debug.Log(StartbattleText);
@@ -194,6 +202,7 @@ public class BattleManager : MonoBehaviour
     void DecideTurnOrder()
     {
         string firstTurnPlayerName;
+        // coin flip
         var n = Random.Range(0, 2);
         if (n == 0)
         {
@@ -213,6 +222,7 @@ public class BattleManager : MonoBehaviour
         lastBattlePhase = BattlePhase.DecideTurnOrder;
     }
 
+    //Unused but for future iterations with more geomon
     void SelectGeomon ()
     {
         Debug.Log("Choose your Geomon.");

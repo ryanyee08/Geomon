@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+    // Stores the player's last position when the player transitions between the overworld and buildings/new scenes
+    public Vector3 lastOverWorldPosition = new Vector3(-12, 1, -5);
+
+    // Notes player's current location
+    // this is reference by XXX
+    public bool isPlayerInBuilding = false;
+
+    // Marks Progress through Initial Tutorials
+    public bool isNewPlayerIntroCompleted = false;
+    public bool isEuclidTownFirstDialgueViewed = false;
+
     public static GameManager GameManagerInstance;
 
     // ENCAPSULATION
@@ -56,15 +68,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Stores the player's last position when the player transitions between the overworld and buildings/new scenes
-    public Vector3 lastOverWorldPosition = new Vector3(-12, 1, -5);
-
-    // Notes player's current location
-    public bool isPlayerInBuilding = false;
-
-    // Marks Progress through Initial Tutorials
-    public bool isNewPlayerIntroCompleted = false;
-    public bool isEuclidTownFirstDialgueViewed = false;
 
     private void Awake()
     {
